@@ -1,10 +1,10 @@
-import { Body, Controller, Get, Post } from "@nestjs/common";
-import { PostService } from "./post.service";
-import { PostDTO } from "src/post.dto";
+import { Body, Controller, Get, Post } from '@nestjs/common';
+import { PostService } from './post.service';
+import { PostDTO } from 'src/post.dto';
 
 @Controller()
 export class PostController {
-    constructor(private readonly postService: PostService) {}
+  constructor(private readonly postService: PostService) {}
 
   @Get('posts')
   findAll() {

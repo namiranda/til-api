@@ -1,21 +1,25 @@
 import { Module } from '@nestjs/common';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { DataSource } from 'typeorm';
 import { Post } from './posts/post.entity';
 import { PostModule } from './posts/post.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'mongodb',
-      url: 'mongodb+srv://usr:pass@dummy.mongodb.net/',
-      entities: [Post],
+    TypeOrmModule.forRootAsync({
+      imports: [
+        ConfigModule.forRoot(),
+      ],
+      useFactory: async (configService: ConfigService) => ({
+        type: 'mongodb',
+        url: `mongodb+srv://${configService.get('DB_USER')}:${configService.get('DB_PASSWORD')}@${configService.get('DB_NAME')}/?retryWrites=true&w=majority`,
+        entities: [Post],
+      }),
+      inject: [ConfigService],
     }),
     PostModule,
   ],
-  providers: [AppService],
+  providers: [AppService, ConfigService],
 })
-export class AppModule {
-  constructor(private dataSource: DataSource) {}
-}
+export class AppModule {}
