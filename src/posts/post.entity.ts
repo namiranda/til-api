@@ -10,4 +10,7 @@ export class Post {
 
   @Column()
   content: string;
+
+  @Column()
+  tags: Array<string>;
 }

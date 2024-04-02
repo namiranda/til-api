@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Post } from './post.entity';
 import { Repository } from 'typeorm';
-import { PostDTO } from 'src/post.dto';
+import { PostDTO } from 'src/posts/post.dto';
 
 @Injectable()
 export class PostService {
@@ -12,7 +12,9 @@ export class PostService {
   ) {}
 
   async findAll(): Promise<Post[]> {
-    return await this.postRepository.find();
+    return await this.postRepository.find(
+      { order: { _id: 'DESC' } },
+    );
   }
 
   async create(post: PostDTO): Promise<Post> {
