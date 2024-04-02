@@ -13,4 +13,12 @@ export class Post {
 
   @Column()
   tags: Array<string>;
+
+  toPostDTO() {
+    return {
+      title: this.title,
+      content: this.content,
+      tags: this.tags,
+    };
+  }
 }

@@ -8,9 +8,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 @Module({
   imports: [
     TypeOrmModule.forRootAsync({
-      imports: [
-        ConfigModule.forRoot(),
-      ],
+      imports: [ConfigModule.forRoot()],
       useFactory: async (configService: ConfigService) => ({
         type: 'mongodb',
         url: `mongodb+srv://${configService.get('DB_USER')}:${configService.get('DB_PASSWORD')}@${configService.get('DB_NAME')}/?retryWrites=true&w=majority`,

@@ -8,7 +8,9 @@ export class PostController {
 
   @Get('posts')
   findAll() {
-    return this.postService.findAll();
+    return this.postService
+      .findAll()
+      .then((posts) => posts.map((post) => post.toPostDTO()));
   }
 
   @Post('posts')
